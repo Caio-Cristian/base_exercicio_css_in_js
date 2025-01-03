@@ -1,31 +1,28 @@
-import { FormEvent, useState } from 'react'
-
-import styles from './FormVagas.module.css'
+import React, { useState, FormEvent } from 'react'
+import * as S from './styles'
 
 type Props = {
-  aoPesquisar: (termo: string) => void
+  onFilter: (filter: string) => void
 }
 
-const FormVagas = ({ aoPesquisar }: Props) => {
-  const [termo, setTermo] = useState<string>('')
+const FormVagas = ({ onFilter }: Props) => {
+  const [filter, setFilter] = useState<string>('')
 
-  const aoEnviarForm = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    aoPesquisar(termo.toLocaleLowerCase())
+    onFilter(filter.toLocaleLowerCase())
   }
 
   return (
-    <form className={styles.form} onSubmit={aoEnviarForm}>
-      <input
-        className={styles.campo}
-        placeholder="Front-end, fullstack, node, design"
-        onChange={(e) => setTermo(e.target.value)}
+    <S.Form onSubmit={handleSubmit}>
+      <S.Campo
+        placeholder="Filtrar vagas"
+        onChange={(e) => setFilter(e.target.value)}
         type="search"
       />
-      <button className={styles.btnPesquisar} type="submit">
-        Pesquisar
-      </button>
-    </form>
+      <S.BtnPesquisar type="submit">Filtrar</S.BtnPesquisar>
+    </S.Form>
   )
 }
+
 export default FormVagas
